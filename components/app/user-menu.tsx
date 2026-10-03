@@ -24,7 +24,7 @@ export function UserMenu({ email }: { email: string | null }) {
         aria-label="Account menu"
       >
         <span
-          className="flex size-7 shrink-0 items-center justify-center rounded-full bg-ink text-xs font-semibold text-paper"
+          className="flex size-7 shrink-0 items-center justify-center rounded-full bg-midnight text-xs font-semibold text-chalk"
           aria-hidden
         >
           {initial}

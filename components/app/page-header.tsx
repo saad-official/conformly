@@ -19,7 +19,7 @@ export function PageHeader({
       )}
     >
       <div className="min-w-0 space-y-1">
-        <h1 className="font-display text-3xl leading-tight tracking-tight">{title}</h1>
+        <h1 className="font-heading text-3xl leading-tight tracking-tight">{title}</h1>
         {description ? (
           <p className="max-w-2xl text-sm text-muted-foreground">{description}</p>
         ) : null}

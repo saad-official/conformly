@@ -20,7 +20,7 @@ export function EmptyState({
         className,
       )}
     >
-      <h2 className="font-display text-xl">{title}</h2>
+      <h2 className="font-heading text-xl">{title}</h2>
       {description ? (
         <p className="max-w-md text-sm text-muted-foreground">{description}</p>
       ) : null}

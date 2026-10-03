@@ -61,7 +61,7 @@ export function NavLinks({ queueCount }: { queueCount: number }) {
             <span className="truncate">{label}</span>
             {showCount ? (
               <span
-                className="tabular ml-auto inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-amber px-1.5 text-xs font-semibold text-amber-foreground"
+                className="tabular ml-auto inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-warn px-1.5 text-xs font-semibold text-warn-foreground"
                 aria-label={`${queueCount} ${queueCount === 1 ? "draft" : "drafts"} awaiting approval`}
               >
                 {queueCount > 99 ? "99+" : queueCount}

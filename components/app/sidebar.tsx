@@ -19,7 +19,7 @@ function PlanBadge({ plan }: { plan: Plan }) {
     <Badge
       asChild
       variant={pro ? "default" : "secondary"}
-      className={cn(pro && "bg-amber text-amber-foreground")}
+      className={cn(pro && "bg-warn text-warn-foreground")}
     >
       <Link href="/billing" aria-label={`${pro ? "Pro" : "Free"} plan. Manage billing`}>
         {pro ? "Pro" : "Free"}
@@ -35,7 +35,7 @@ function RailBody({ orgName, plan, email, queueCount }: SidebarProps) {
       <div className="px-4 pt-5 pb-4">
         <Link
           href="/dashboard"
-          className="font-display text-2xl leading-none tracking-tight text-sidebar-foreground outline-none focus-visible:ring-3 focus-visible:ring-sidebar-ring/50"
+          className="font-heading text-2xl leading-none tracking-tight text-sidebar-foreground outline-none focus-visible:ring-3 focus-visible:ring-sidebar-ring/50"
         >
           Conformly
         </Link>
@@ -72,7 +72,7 @@ export function MobileTopBar(props: SidebarProps) {
       <MobileNav>
         <RailBody {...props} />
       </MobileNav>
-      <Link href="/dashboard" className="font-display text-xl tracking-tight">
+      <Link href="/dashboard" className="font-heading text-xl tracking-tight">
         Conformly
       </Link>
       <span className="ml-auto truncate pr-2 text-sm text-muted-foreground">{props.orgName}</span>
