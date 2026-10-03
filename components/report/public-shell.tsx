@@ -1,0 +1,21 @@
+import { SiteFooter } from "@/components/marketing/site-footer";
+import { SiteHeader } from "@/components/marketing/site-header";
+
+/** Chrome of the public scan pages (progress and report): the marketing header and footer around a document. */
+export function PublicShell({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex min-h-dvh flex-1 flex-col overflow-x-clip">
+      <a
+        href="#main"
+        className="sr-only z-50 rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-solid focus-visible:outline-primary"
+      >
+        Skip to content
+      </a>
+      <SiteHeader />
+      <main id="main" tabIndex={-1} className="flex-1 outline-none">
+        {children}
+      </main>
+      <SiteFooter />
+    </div>
+  );
+}
