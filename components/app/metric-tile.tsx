@@ -22,7 +22,7 @@ export function MetricTile({
         className={cn(
           "tabular mt-2 font-heading text-3xl leading-none",
           tone === "positive" && "text-pass",
-          tone === "attention" && "text-warn-foreground dark:text-warn",
+          tone === "attention" && "text-warn",
         )}
       >
         {value}
