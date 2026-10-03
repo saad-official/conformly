@@ -2,44 +2,35 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  CreditCard,
-  FileBadge,
-  HardHat,
-  LayoutDashboard,
-  ListChecks,
-  Send,
-  Settings,
-  ShieldCheck,
-  type LucideIcon,
-} from "lucide-react";
+import { CreditCard, Globe, History, LayoutDashboard, Settings, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type NavItem = { href: string; label: string; icon: LucideIcon };
 
 const NAV_ITEMS: NavItem[] = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/vendors", label: "Vendors", icon: HardHat },
-  { href: "/certificates", label: "Certificates", icon: FileBadge },
-  { href: "/queue", label: "Queue", icon: ListChecks },
-  { href: "/outbox", label: "Outbox", icon: Send },
-  { href: "/templates", label: "Requirements", icon: ShieldCheck },
+  { href: "/sites", label: "Sites", icon: Globe },
+  { href: "/scans", label: "Scans", icon: History },
   { href: "/settings", label: "Settings", icon: Settings },
   { href: "/billing", label: "Billing", icon: CreditCard },
 ];
+
+/** The item that carries the open-issues counter. */
+const COUNTER_HREF = "/dashboard";
 
 function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function NavLinks({ queueCount }: { queueCount: number }) {
+/** `openIssueCount`: open high-severity fails across each site's latest scan; 0 hides the badge. */
+export function NavLinks({ openIssueCount }: { openIssueCount: number }) {
   const pathname = usePathname();
 
   return (
     <nav aria-label="Main" className="grid gap-0.5">
       {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
         const active = isActive(pathname, href);
-        const showCount = href === "/queue" && queueCount > 0;
+        const showCount = href === COUNTER_HREF && openIssueCount > 0;
         return (
           <Link
             key={href}
@@ -61,10 +52,10 @@ export function NavLinks({ queueCount }: { queueCount: number }) {
             <span className="truncate">{label}</span>
             {showCount ? (
               <span
-                className="tabular ml-auto inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-warn px-1.5 text-xs font-semibold text-warn-foreground"
-                aria-label={`${queueCount} ${queueCount === 1 ? "draft" : "drafts"} awaiting approval`}
+                className="tabular ml-auto inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-fail px-1.5 font-mono text-xs font-semibold text-fail-foreground"
+                aria-label={`${openIssueCount} open high-severity ${openIssueCount === 1 ? "issue" : "issues"}`}
               >
-                {queueCount > 99 ? "99+" : queueCount}
+                {openIssueCount > 99 ? "99+" : openIssueCount}
               </span>
             ) : null}
           </Link>

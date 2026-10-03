@@ -10,17 +10,13 @@ export type SidebarProps = {
   orgName: string;
   plan: Plan;
   email: string | null;
-  queueCount: number;
+  openIssueCount: number;
 };
 
 function PlanBadge({ plan }: { plan: Plan }) {
   const pro = plan === "pro";
   return (
-    <Badge
-      asChild
-      variant={pro ? "default" : "secondary"}
-      className={cn(pro && "bg-warn text-warn-foreground")}
-    >
+    <Badge asChild variant={pro ? "default" : "secondary"} className="font-mono tracking-wide uppercase">
       <Link href="/billing" aria-label={`${pro ? "Pro" : "Free"} plan. Manage billing`}>
         {pro ? "Pro" : "Free"}
       </Link>
@@ -28,17 +24,27 @@ function PlanBadge({ plan }: { plan: Plan }) {
   );
 }
 
+function RailWordmark({ className }: { className?: string }) {
+  return (
+    <Link
+      href="/dashboard"
+      className={cn(
+        "inline-flex items-center gap-2 font-heading font-bold tracking-tight text-sidebar-foreground outline-none focus-visible:ring-3 focus-visible:ring-sidebar-ring/50",
+        className,
+      )}
+    >
+      <span aria-hidden className="size-2.5 rounded-full bg-primary" />
+      Conformly
+    </Link>
+  );
+}
+
 /** Rail contents, shared by the desktop rail and the mobile drawer. */
-function RailBody({ orgName, plan, email, queueCount }: SidebarProps) {
+function RailBody({ orgName, plan, email, openIssueCount }: SidebarProps) {
   return (
     <>
       <div className="px-4 pt-5 pb-4">
-        <Link
-          href="/dashboard"
-          className="font-heading text-2xl leading-none tracking-tight text-sidebar-foreground outline-none focus-visible:ring-3 focus-visible:ring-sidebar-ring/50"
-        >
-          Conformly
-        </Link>
+        <RailWordmark className="text-xl leading-none" />
         <div className="mt-3 flex items-center gap-2">
           <p className="min-w-0 flex-1 truncate text-sm text-sidebar-foreground/70" title={orgName}>
             {orgName}
@@ -47,7 +53,7 @@ function RailBody({ orgName, plan, email, queueCount }: SidebarProps) {
         </div>
       </div>
       <div className="flex-1 overflow-y-auto px-2">
-        <NavLinks queueCount={queueCount} />
+        <NavLinks openIssueCount={openIssueCount} />
       </div>
       <div className="border-t border-sidebar-border p-2">
         <UserMenu email={email} />
@@ -72,9 +78,7 @@ export function MobileTopBar(props: SidebarProps) {
       <MobileNav>
         <RailBody {...props} />
       </MobileNav>
-      <Link href="/dashboard" className="font-heading text-xl tracking-tight">
-        Conformly
-      </Link>
+      <RailWordmark className="text-lg" />
       <span className="ml-auto truncate pr-2 text-sm text-muted-foreground">{props.orgName}</span>
     </header>
   );

@@ -6,3 +6,4 @@ node_modules/
 .claude/
 *.tsbuildinfo
 next-env.d.ts
+.pglite/
