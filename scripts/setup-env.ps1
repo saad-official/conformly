@@ -34,10 +34,16 @@ function Read-Secret($file) {
   return (Get-Content $file -Raw).Trim()
 }
 function Set-VercelEnv($name, $value, [switch]$Sensitive) {
+  $vercelCmd = "C:/Program Files/nodejs/vercel.cmd"
   foreach ($target in @("production", "preview", "development")) {
     $args = @("env", "add", $name, $target, "--force")
     if ($Sensitive) { $args += "--sensitive" }
-    $value | & vercel @args *> $null
+    $prev = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    $value | & $vercelCmd  *> $null
+    $code = $LASTEXITCODE
+    $ErrorActionPreference = $prev
+    if ($code -ne 0) { throw "vercel env add $name ($target) failed with exit code $code" }
   }
   Write-Host "  set $name"
 }
@@ -99,5 +105,7 @@ EMAIL_FROM=Conformly <onboarding@resend.dev>
 
 Write-Host "Running database migrations against the direct URL..."
 $env:DATABASE_URL = $directUrl
-& pnpm db:migrate
+$prevEap = $ErrorActionPreference; $ErrorActionPreference = "Continue"
+& "C:/Program Files/nodejs/pnpm.cmd" db:migrate
+$ErrorActionPreference = $prevEap
 Write-Host "Done. Redeploy with: vercel deploy --prod --yes"
